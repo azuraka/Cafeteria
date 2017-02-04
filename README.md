@@ -2,6 +2,23 @@
 
 Online Food Ordering System (OFOS) for restaurant with multiple branches.
 
+## Prerequisites
+
+1. Python v2.7
+2. pip latest version
+
+## Installing
+
+### Linux (Ubuntu)
+
+1. Use virtual environment for development purpose. Click [here](http://roundhere.net/journal/virtualenv-ubuntu-12-10) to learn how to setup virtual environment.
+2. Install pip packages from the home directory of the project in virtual environment.
+```
+pip install -r requirements.txt
+```
+
+Further instructions will be added with time.
+
 ## General Intructions for Developers
 
 ### Do's
@@ -24,24 +41,6 @@ Online Food Ordering System (OFOS) for restaurant with multiple branches.
 3. Don't make the code public at this point of time except for personal use or any course project. NDA. :P
 
 * **Feel free to add/change/delete any of the above instructions.**
-
-## Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Authors
 
