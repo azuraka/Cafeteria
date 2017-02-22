@@ -23,7 +23,7 @@ Further instructions will be added with time.
 
 ### Do's
 
-1. Figure out the best method (optimal) before implementing and if possible writedown the pros, cons and reason of the method chosen in the documentation.
+1. Figure out the best method (optimal) before implementing and if possible writedown the pros, cons and reason of the method chosen in the document.
 2. Follow the coding standard as mentioned in standards file.
 3. Documentation and commenting is a must.
 4. Write down test cases wherever necessary.
