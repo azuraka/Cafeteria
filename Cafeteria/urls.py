@@ -17,11 +17,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 urlpatterns = [
     # Examples:
-    #url(r'^$', 'Cafeteria.views.home', name='home'),
+    # url(r'^$', 'Cafeteria.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     # url(r'^order/', include('order.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^menu/', include('restaurant_management.urls')),
-    #url(r'^order/', include('order.urls')),
+    url(r'^index/', include('restaurant_management.urls')),
+    url(r'^complaint/', include('feedback_management.urls')),
+    # url(r'^$', include('restaurant_management.urls')),
     ]
 

@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Restaurant(models.Model):
-    r_id = models.IntegerField(default=0)
-    name = models.CharField(max_length=250,unique=True)
+    r_id = models.IntegerField(default=0,primary_key=True)
+    name = models.CharField(max_length=250)
     city = models.CharField(max_length=250)
     area = models.CharField(max_length=250)
     def __str__(self):
