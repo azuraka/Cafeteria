@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+'feedback_management.apps.FeedbackManagementConfig',
 'restaurant_management.apps.RestaurantManagementConfig',
     'django.contrib.admin',
     'django.contrib.auth',
