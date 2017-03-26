@@ -7,6 +7,9 @@ Online Food Ordering System (OFOS) for restaurant with multiple branches.
 1. Python v2.7
 2. pip latest version
 
+## Optional
+1. [**django_extensions**](https://github.com/django-extensions/django-extensions)
+
 ## Installing
 
 ### Linux (Ubuntu)
