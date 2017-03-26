@@ -13,6 +13,7 @@ class Order(models.Model):
     order_items = models.CharField(max_length=5000, blank=True, null=True)
     status = models.CharField(max_length=20)
     amount = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
+    total_amount = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
     extra_charges = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
     delivery_charges = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
     customer_id = models.CharField(max_length=100, blank=True, null=True)
@@ -24,7 +25,8 @@ class Order(models.Model):
     delivery_by = models.CharField(max_length=100, blank=True, null=True) #It stores take away or the delivery boy name
     last_update_by = models.CharField(max_length=100)
     last_update_date = models.DateTimeField(default=datetime.now, blank=False)
-    is_deleted = models.BooleanField(default=False)#To support the soft delete feature for any order information
+    offer_amount = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True, default=0)
+    coupon_code = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return str(self.order_id) + "-" + str(self.order_name) + "-" + str(self.status)

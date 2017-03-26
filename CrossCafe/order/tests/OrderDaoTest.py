@@ -1,5 +1,9 @@
+"""
+This file is to write the test cases related to OrderDao APIs exposed from order module to use in order-view
+"""
+
 from django.test import TestCase
-import OrderDao
+from order import OrderDao
 from order.models import Order
 
 

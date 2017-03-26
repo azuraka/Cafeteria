@@ -14,6 +14,7 @@ class ViewUtil(object):
         item_details = request.POST.get('itemdetails')
         order.order_items = item_details
         order.amount = request.POST.get('amount')
+        #
         order.delivery_charges = request.POST.get('delivery_charges')
         order.extra_charges = request.POST.get('extra_charges')
         order.delivery_address = request.POST.get('delivery_address')

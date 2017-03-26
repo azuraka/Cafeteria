@@ -4,6 +4,7 @@ from django.http import Http404, JsonResponse
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core import serializers
+import json
 from .models import Order
 from . import OrderDao, ViewUtil
 # Create your views here.
@@ -38,5 +39,24 @@ def orderdetails(request):
 
     return render(request, 'order/orderdetails.html', {})
 
-def check_out(request, order):
-    pass
+@csrf_exempt
+def get_customer_order(request):
+    if not request.method == 'POST':
+        raise Http404("Invalid Request")
+    customer_id = request.POST.get('customer_id')
+    order = OrderDao.OrderDao.getInstance().find_by_customer_id(customer_id)
+    if order is None:
+        order = '{}'
+    return HttpResponse(serializers.serialize('json', order))
+
+@csrf_exempt
+def get_restaurant_order(request):
+    if not request.method=='POST':
+        raise Http404("Invalid Request")
+    restaurant_id = request.POST.get('restaurant_id')
+    order = OrderDao.OrderDao.getInstance().find_by_restaurant_id(restaurant_id)
+    if order is None:
+        order = '{}'
+    #result = [{'order': o.area} for r in allAreas]
+    orders = serializers.serialize('json', list(order))
+    return HttpResponse(orders)
