@@ -48,7 +48,7 @@ Further instructions will be added with time.
 ## Authors
 
 * [**Saurabh Jain**](https://azuraka.github.io)
-* **Rajesh Dansena**
+* [**Rajesh Dansena**](https://github.com/rajedan)
 * **Deeksha Singh Thakur**
 * **Siddharth Saklecha**
 
