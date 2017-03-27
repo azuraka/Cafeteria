@@ -45,11 +45,13 @@ class OrderDao(object):
         order.save()
         return order
 
+    #This api deletes order from db based on order_id of order object argument
     def delete(self, order):
         if Util.Util.is_null(order):
             raise ValueError('cannot delete null order!')
         if Util.Util.is_null(self.find_by_id(order.order_id)):
             raise ValueError('order does not exist in DB!')
+        Order.objects.filter(order_id=order.order_id).delete()
 
     def update(self, order):
         if Util.Util.is_null(order):
