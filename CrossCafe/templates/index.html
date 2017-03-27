@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <form name="restaurant_search" method="POST" action="/restaurant/dropdown_search">
+    {% csrf_token %}
+        <select name="city">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+        </select>
+        <select name="area">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+        </select>
+        <input type="submit" name="submit_button">
+    </form>
+</body>
+</html>
