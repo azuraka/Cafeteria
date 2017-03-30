@@ -40,20 +40,23 @@ function addToCart(item_id, item_name){
 }
 
 function checkout(){
-    var data = {'cart': localStorage.getItem('cart')};
-    $.post('/order/createOrder',data,function(response){
-        console.log(response);
-    });
+    //if(request.user.is_authenticated()){
+        var data = {'cart': localStorage.getItem('cart'), 'restaurant_id': localStorage.getItem('cart')};
+        $.post('/order/createOrder',data,function(response){
+            console.log(response);
+        });
+    //}
+    //else{
+       window.location.href = '/order/review';
+    //}
 }
 
 function displayCart(){
-    if(localStorage.getItem('restaurant_id')==null){
+    if(localStorage.getItem('restaurant_id')==null)
         localStorage.setItem('restaurant_id', getQueryStringValue("restaurant_id"));
-    }
-    else if(localStorage.getItem('restaurant_id')==getQueryStringValue("restaurant_id")){
+    else if(localStorage.getItem('restaurant_id')==getQueryStringValue("restaurant_id"))
         if(localStorage.getItem('cart'))
             document.getElementById("cart").innerHTML = localStorage.getItem('cart');
-    }
     else{
         localStorage.setItem('restaurant_id', getQueryStringValue("restaurant_id"));
         if(localStorage.getItem('cart'))

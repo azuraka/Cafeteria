@@ -5,5 +5,5 @@ from order import views
 
 urlpatterns = [
 	url(r'^create', views.createOrder, name='createOrder'),
-    url(r'^show', views.showOrder, name='showOrder'),
+    url(r'^review', views.reviewOrder, name='reviewOrder'),
 ]

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <form name="delivery_address" method="POST" action="/user/delivery_address">
+    {% csrf_token %}
+        <input type="text" name="flat_number" placeholder="Flat/House No.">
+        <input type="text" name="society_name" placeholder="Street/Society Name">
+        <input type="submit" name="submit_button">
+    </form>
+    <div id="cart"></div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if('{{cart}}')
+                $("#cart").text('{{cart}}');
+            else if(localStorage.getItem('cart'))
+                $("#cart").text(localStorage.getItem('cart'));
+            else
+                window.location.href = '/';
+        });
+    </script>
+</body>
+</html>
