@@ -44,7 +44,7 @@ class OrderAPITest(TestCase):
         payload["payment_type"] = "online"
         payload["delivery_charges"] = 50
         payload["order_id"] = order.order_id
-        response = path = self.client.post('/cafeteria/order/pay',payload)
+        response = path = self.client.post('/order/pay',payload)
         self.assertIsNotNone(response)
         self.assertEqual(response.status_code, 200, "placeorder API call test fail, dude, smells bad here!")
         print path
@@ -61,7 +61,7 @@ class OrderAPITest(TestCase):
         payload["order_id"] = order.order_id
         payload["order_name"] = "new order"
 
-        response = path = self.client.post('/cafeteria/order/placeorder', payload)
+        response = path = self.client.post('/order/placeorder', payload)
         print path
         self.assertIsNotNone(response)
         self.assertEqual(response.status_code, 200, "payment API call test fail, dude, something fishy here!")
@@ -72,7 +72,7 @@ class OrderAPITest(TestCase):
         order = order_dao.insert(order)
         payload = {}
         payload["customer_id"] = order.customer_id
-        response = path = self.client.post('/cafeteria/order/getcustomerorder', payload)
+        response = path = self.client.post('/order/getcustomerorder', payload)
         self.assertIsNotNone(response)
         self.assertEqual(response.status_code, 200, "getcustomerorder API call test fail, dude, something serious issue here!")
 
@@ -82,7 +82,7 @@ class OrderAPITest(TestCase):
         order = order_dao.insert(order)
         payload = {}
         payload["restaurant_id"] = order.restaurant_id
-        response = path = self.client.post('/cafeteria/order/getrestaurantorder', payload)
+        response = path = self.client.post('/order/getrestaurantorder', payload)
         self.assertIsNotNone(response)
         self.assertEqual(response.status_code, 200, "getrestaurantorder API call test fail, dude, something serious issue here!")
 
@@ -92,6 +92,6 @@ class OrderAPITest(TestCase):
         order = order_dao.insert(order)
         payload = {}
         payload["restaurant_id"] = "somerandomid"
-        response = path = self.client.post('/cafeteria/order/getrestaurantorder', payload)
+        response = path = self.client.post('/order/getrestaurantorder', payload)
         self.assertIsNotNone(response)
         self.assertEqual(response.status_code, 200, "getrestaurantorder API call test fail, dude, something serious issue here!")
