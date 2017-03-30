@@ -27,4 +27,4 @@ class Order(models.Model):
     is_deleted = models.BooleanField(default=False)#To support the soft delete feature for any order information
 
     def __str__(self):
-        return str(self.order_id) + "-" + str(self.order_name) + "-" + str(self.status)
+        return '%s-%s-%s' % (self.order_id, self.order_name, self.status)

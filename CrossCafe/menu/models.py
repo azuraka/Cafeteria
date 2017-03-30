@@ -9,5 +9,6 @@ class FoodItem(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
     status = models.BooleanField(default=True)
+
     def __str__(self):
-        return self.name+"\t"+str(self.price)
+        return '%s\t%s' % (self.name, self.price)

@@ -7,5 +7,6 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=250)
     city = models.CharField(max_length=250)
     area = models.CharField(max_length=250)
+    
     def __str__(self):
-        return self.name+", "+self.area+", "+self.city
+    	return '%s, %s, %s' % (self.name, self.area, self.city)
