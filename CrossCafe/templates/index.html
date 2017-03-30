@@ -4,72 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Cross Cafe</title>
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        var csrftoken = getCookie('csrftoken');
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        function sameOrigin(url) {
-            // test that a given url is a same-origin URL
-            // url could be relative or scheme relative or absolute
-            var host = document.location.host; // host + port
-            var protocol = document.location.protocol;
-            var sr_origin = '//' + host;
-            var origin = protocol + sr_origin;
-            // Allow absolute or scheme relative URLs to same origin
-            return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-                (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-                // or any other URL that isn't scheme relative or absolute i.e relative.
-                !(/^(\/\/|http:|https:).*/.test(url));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-                    // Send the token to same-origin, relative URLs only.
-                    // Send the token only if the method warrants CSRF protection
-                    // Using the CSRFToken value acquired earlier
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-
-        $(document).ready(function() {
-            loadAreas();
-            $('[name="city"]').change(loadAreas);
-            
-            function loadAreas(){
-                var city = $('[name="city"]').attr('value');
-                $.get('/restaurant/get_areas/?city=' + city, function(data){
-                    $('[name="area"]').empty();
-                    $.each(JSON.parse(data), function(val, text){
-                        $('[name="area"]').append( $('<option></option>').val(text['fields']['area']).html(text['fields']['area']));
-                    });
-                });
-            }
-        });
-
-    </script>
     <form name="restaurant_search" method="POST" action="/restaurant/dropdown_search">
     {% csrf_token %}
         <select name="city">
@@ -80,5 +18,8 @@
         <select name="area"></select>
         <input type="submit" name="submit_button">
     </form>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 </body>
 </html>
