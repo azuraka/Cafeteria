@@ -13,7 +13,7 @@
         {% endfor %}
         </select>
         <select name="area" class="form-control"></select>
-        <input type="submit" name="submit_button" class="btn">
+        <input type="submit" name="submit_button">
     </form>
 </div>
 {% load static %}

@@ -14,13 +14,13 @@
 <body>
     {% for item in menu %}
         {{ item }}<br/>
-        <button type="button" onclick="increment('{{item.item_id}}')" class="btn">+</button>
+        <button type="button" onclick="increment('{{item.item_id}}')">+</button>
         <div id="{{item.item_id}}">1</div>
-        <button type="button" onclick="decrement('{{item.item_id}}')" class="btn">-</button>
-        <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}')" class="btn">Add to Cart !</button>
+        <button type="button" onclick="decrement('{{item.item_id}}')">-</button>
+        <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}')">Add to Cart !</button>
         <br/><br/>
     {% endfor %}
-    <button type="button" onclick="checkout()" class="btn-lg">Checkout !</button><br/>
+    <button type="button" onclick="checkout()">Checkout !</button><br/>
     Cart<br/>
     <div id="cart"></div>
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
