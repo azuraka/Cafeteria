@@ -41,10 +41,10 @@ function addToCart(item_id, item_name){
 
 function checkout(){
     //if(request.user.is_authenticated()){
-        var data = {'cart': localStorage.getItem('cart'), 'restaurant_id': localStorage.getItem('cart')};
-        $.post('/order/createOrder',data,function(response){
-            console.log(response);
-        });
+    //    var data = {'cart': localStorage.getItem('cart'), 'restaurant_id': localStorage.getItem('restaurant_id')};
+    //    $.post('/order/createOrder',data,function(response){
+    //        console.log(response);
+    //    });
     //}
     //else{
        window.location.href = '/order/review';
