@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^menu/', include('menu.urls')),
     url(r'^order/', include('order.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^complaint/', include('feedback.urls')),
+    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
