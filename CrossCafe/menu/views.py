@@ -10,6 +10,7 @@ def showMenu(request):
     if(request.GET.get('restaurant_id')):
         restaurant_id = request.GET.get('restaurant_id')
         menu = FoodItem.objects.filter(restaurant_id=restaurant_id, status=True)
+        print menu
         return render(request, 'menu/show_menu.html', {'menu': menu})
     else:
         home_page_url = '/'

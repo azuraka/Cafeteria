@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +11,10 @@
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    <form name="delivery_address" method="POST" action="/user/delivery_address" class="form-control">
+    <form name="delivery_address" method="POST" action="/user/delivery_address">
     {% csrf_token %}
         <input type="text" name="flat_number" placeholder="Flat/House No." class="input-lg">
-        <input type="text" name="society_name" placeholder="Street/Society Name">
+        <input type="text" name="society_name" placeholder="Street/Society Name" class="input-lg">
         <input type="submit" name="submit_button" class="btn">
     </form>
     <div id="cart"></div>
@@ -29,3 +32,4 @@
     </script>
 </body>
 </html>
+{% endblock %}

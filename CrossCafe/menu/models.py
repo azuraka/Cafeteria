@@ -4,7 +4,7 @@ from django.db import models
 from restaurant.models import Restaurant
 
 class FoodItem(models.Model):
-    item_id = models.IntegerField(default=0,primary_key=True)
+    item_id = models.AutoField(primary_key=True)
     restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
