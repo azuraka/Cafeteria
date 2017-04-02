@@ -34,17 +34,23 @@ def createOrder(request):
 		return HttpResponseNotFound('<h1>404 Page not found</h1>')
 
 def reviewOrder(request):
-	cart = Order.objects.filter(status='draft')
+	cart = Order.objects.filter(status='draft').first()
 	if(cart):
-		return render(request, 'order/review_order.html', {'cart': cart})
+		return render(request, 'order/review_order.html', {'cart': cart.order_items})
 	else:
-		return render(request, 'order/review_order.html')
+		return render(request, '/')
 
 @csrf_exempt
 def placeorder(request):
     customer_id = ViewUtil.ViewUtil.get_customer_id(request)
     order = ViewUtil.ViewUtil.prepare_order(request, customer_id)
-    return HttpResponse(serializers.serialize('json', [order, ]))
+    order_json = serializers.serialize('json', [ order, ])#serializers.serialize('json', list(order))
+    struct = json.loads(order_json)
+    order_json = json.dumps(struct[0])
+    order_json = json.dumps(json.loads(order_json)['fields'])
+    order_json = json.dumps(json.loads(order_json))
+    #HttpResponse(order_json)
+    return render(request, 'order/review_payment.html', {'order': order_json})
 
 #Update the payment details in the order table
 #Trigger a notification to Attendar for Accept/Reject the order

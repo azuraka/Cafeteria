@@ -8,28 +8,112 @@
     <meta charset="UTF-8">
     <title>Cross Cafe</title>
     <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    <form name="delivery_address" method="POST" action="/user/delivery_address">
+    <form name="placeorder" method="POST" action="/order/placeorder">
     {% csrf_token %}
-        <input type="text" name="flat_number" placeholder="Flat/House No." class="input-lg">
-        <input type="text" name="society_name" placeholder="Street/Society Name" class="input-lg">
-        <input type="submit" name="submit_button" class="btn">
+
+        <div class="row">
+            <div class="col-sm-6">
+            {% if cart %}
+                <table class="table table-hover">
+    	            <thead>
+	    	            <tr>
+		    	            <th>Item Id</th>
+			                <th>Item Name</th>
+			                <th>Item Quantity</th>
+    		            </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        var cartItems = JSON.parse(localStorage.getItem('cart'));
+                        for (var i = 0; i<cartItems.length; i++){
+                            document.write("<tr><th scope='row'>"+cartItems[i].item_id+"</th>");
+                            document.write("<td scope='row'>"+cartItems[i].item_name+"</td>");
+                            document.write("<td scope='row'>"+cartItems[i].quantity+"</td></tr>");
+                        }
+                    </script>
+                    </tbody>
+                </table>
+            {% else %}
+                    <p class="text-warning">Your Cart is Empty, Please grab some food to Order!</p>
+            {% endif %}
+            </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <p class="text-capitalize">Total Amount : 500</p>
+                <div class="card-block">
+                    <div class="input-group">
+                        <input type="text" id="coupon_code" class="form-control" placeholder="Got A Coupon?">
+                        <span class="input-group-btn">
+                            <button id="apply_coupon" class="btn btn-success" type="button">APPLY</button>
+                        </span>
+                         <span class="input-group-btn">
+                            <button id="cancel_coupon" class="btn btn-warning" type="button">CANCEL</button>
+                        </span>
+                    </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">ENTER DELIVERY ADDRESS</h4>
+                        <input type="text" name="address1" placeholder="Flat/House No./Street" class="form-control">
+                        <input type="text" name="address2" placeholder="City/State" class="form-control">
+                        <input type="text" name="landmark" placeholder="Land Mark" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">ENTER CONTACT DETAILS</h4>
+                        <input type="text" name="fname" placeholder="First Name *" class="form-control">
+                        <input type="text" name="lname" placeholder="Last Name *" class="form-control">
+                        <input type="text" name="emailid" placeholder="Email Id *" class="form-control">
+                        <input type="text" name="mnumber" placeholder="Mobile Number" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">ENTER YOUR ORDER NAME</h4>
+                        <input type="text" name="order_name" placeholder="Order Name (Optional)" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function result() {
+                var cartItem = localStorage.getItem("cart");
+                document.write(cartItem);
+                $("#cart").val(cartItem);
+            }
+        </script>
+        <input type="hidden" name="cart" id="cart">
+        <input type="hidden" name="restaurant_id" id="restaurant_id" value="0">
+        <input type="submit" name="submit_button" id="submit_button" class="btn pull-right" value="Proceed To Pay">
+    <script>
+        if(localStorage.getItem('cart')==undefined){
+            document.getElementById("submit_button").style.visibility="hidden"
+        }
+    </script>
     </form>
     <div id="cart"></div>
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            if('{{cart}}')
-                $("#cart").text('{{cart}}');
-            else if(localStorage.getItem('cart'))
-                $("#cart").text(localStorage.getItem('cart'));
-            else
-                window.location.href = '/';
-        });
-    </script>
+
 </body>
 </html>
 {% endblock %}

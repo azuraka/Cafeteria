@@ -37,8 +37,21 @@ function addToCart(item_id, item_name){
     }
     console.log(temp);
     localStorage.setItem('cart', JSON.stringify(temp));
+    printCart();
 }
-
+function printCart() {
+    var cartContainer = document.getElementById('cart');
+    var cardTheme = "<div class='card'><div class='card-block'><h4 class='card-title'>My Cart</h4>";
+    var str = "<p class='card-text'>";
+    var cartData = JSON.parse(localStorage.getItem('cart'));
+    if(cartData) {
+        for (var ii = 0; ii < cartData.length; ii++) {
+            str += cartData[ii].item_name + ":" + cartData[ii].quantity + "<br>"
+        }
+    }
+    str += "</p></div></div>";
+    cartContainer.innerHTML = str;
+}
 function checkout(){
     //if(request.user.is_authenticated()){
     //    var data = {'cart': localStorage.getItem('cart'), 'restaurant_id': localStorage.getItem('restaurant_id')};

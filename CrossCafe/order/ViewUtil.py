@@ -22,14 +22,16 @@ class ViewUtil(object):
         order.extra_charges = extra_charges
         order.delivery_charges = ViewUtil.calculate_delivery_charges(amount+extra_charges)
         order.total_amount = amount+extra_charges+order.delivery_charges
-        order.delivery_address = request.POST.get('delivery_address')
+        address = str(request.POST.get('address1'))+str(request.POST.get('address2'))+str(request.POST.get('landmark'))
+        order.delivery_address = address#request.POST.get('delivery_address')
         order.order_name = request.POST.get('order_name')
         order.status = OrderStatus.OrderStatus.DRAFT
         #order.customer_id = request.POST.get('customer_id')
         order.restaurant_id = request.POST.get('restaurant_id')
         order_type = request.POST.get('order_type')
         order.order_type = "ONLINE" if Util.Util.is_null(order_type) else order_type
-        order.last_update_by = request.POST.get('customer_id')
+        print order.customer_id
+        order.last_update_by = order.customer_id#request.POST.get('customer_id')
         order.last_update_date = datetime.now()
         return order
 
@@ -55,7 +57,7 @@ class ViewUtil(object):
     #Gets the item price from Restaurant module for each item and calculate and return it
     @staticmethod
     def get_item_price(each_item):
-        item_id = each_item['item_id']
+        item_id = each_item['id']
         item_quantity = each_item['quantity']
         if item_id is None or item_quantity is None:
             raise ValueError('Item Id or Quantity cannot be null')
@@ -127,13 +129,13 @@ class ViewUtil(object):
     @staticmethod
     def register_customer(request):
         json = dict()
-        json["customer_name"] = request.POST.get("customer_name")
-        json["customer_email_id"] = request.POST.get("customer_email_id")
-        json["customer_contact_number"] = request.POST.get("customer_contact_number")
-        json["customer_name"] = request.POST.get("customer_name")
+        json["customer_fname"] = request.POST.get("fname")
+        json["customer_lname"] = request.POST.get("lname")
+        json["customer_email_id"] = request.POST.get("emailid")
+        json["customer_contact_number"] = request.POST.get("mnumber")
         # Call the register API (with above payload) from user management module to register
         # the user, which should return the unique customer id for registered customer
-        return request.POST.get("customer_email_id")
+        return request.POST.get("emailid")
 
     @staticmethod
     def prepare_order(request, customer_id):

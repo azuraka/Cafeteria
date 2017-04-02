@@ -11,22 +11,56 @@
     <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
     <meta name="viewport" content="width=device-width">
 </head>
-<body>
-    {% for item in menu %}
-        {{ item }}<br/>
-        <button type="button" onclick="increment('{{item.item_id}}')" class="btn">+</button>
-        <div id="{{item.item_id}}">1</div>
-        <button type="button" onclick="decrement('{{item.item_id}}')" class="btn">-</button>
-        <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}')" class="btn">Add to Cart !</button>
-        <br/><br/>
-    {% endfor %}
-    <button type="button" onclick="checkout()" class="btn-lg">Checkout !</button><br/>
-    Cart<br/>
-    <div id="cart"></div>
+<body onload="printCart()">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="card">
+                <img class="card-img-top img-responsive" src="http://fastdeliveryservice.ca/wp-content/uploads/2014/05/banner_0.jpg">
+                <div class="card-block">
+                    {% for item in menu %}
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                        <th scope="row" class="col-lg-8">
+                                            {{ item }}
+                                        </th>
+                                        <th class="col-lg-1">
+                                            <button type="button" onclick="increment('{{item.item_id}}')" class="btn btn-primary btn-sm">+</button>
+                                        </th>
+                                        <th class="col-lg-1">
+                                            <div id="{{item.item_id}}">1</div>
+                                        </th>
+                                        <th class="col-lg-1">
+                                            <button type="button" onclick="decrement('{{item.item_id}}')" class="btn">-</button>
+                                        </th>
+                                        <th class="col-lg-1">
+                                            <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}')" class="btn">Add to Cart !</button>
+                                        </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div style="position: fixed;">
+                <div class="card card-outline-success text-center">
+                    <h3 class="card-header">Your Order</h3>
+                    <div class="card-block">
+                        <div id="cart" class='card-block'></div>
+                        <button type="button" onclick="checkout()" class="btn-lg">Checkout !</button><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/show_menu.js' %}"></script>
-    
+
 </body>
 </html>
 {% endblock %}

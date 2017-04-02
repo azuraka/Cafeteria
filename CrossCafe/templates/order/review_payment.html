@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/review_payment.css' %}" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <form name="review_order" method="POST" action="/order/placeorder">
+    {% csrf_token %}
+        {{ order }}
+
+        <div class="card">
+            <div class="card-header">
+                Total Bill
+            </div>
+            <div class="card-block">
+                <p class="card-text">{{ order.delivery_charges }}</p><br>
+                <p class="card-text">{{ order.extra_charges }}</p><br>
+                <p class="card-text">{{ order.offer_amount }}</p><br>
+                Total Payable : <p class="card-text">{{ order.total_amount }}</p><br>
+            </div>
+        </div>
+
+
+                 <div>
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">home</div>
+                <div role="tabpanel" class="tab-pane" id="profile">profile</div>
+              </div>
+
+            </div>
+
+    </form>
+    <div id="cart"></div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/review_payment.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}
