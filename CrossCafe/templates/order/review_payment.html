@@ -9,45 +9,136 @@
     <title>Cross Cafe</title>
     <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
     <link rel="stylesheet" href="{% static 'css/review_payment.css' %}" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+    <script src = "{% static 'js/bootstrap.min.js' %}"></script>
     <meta name="viewport" content="width=device-width">
+    <style>
+        .pop-outer{
+            background-color: rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .pop-inner{
+            background-color: #ffffff;
+            width: 450px;
+            height: 200px;
+            padding: 25px;
+            margin: 15% auto;
+        }
+    </style>
 </head>
 <body>
-    <form name="review_order" method="POST" action="/order/placeorder">
+    <form name="review_order" method="POST" action="/order/pay">
     {% csrf_token %}
-        {{ order }}
+    <div class="row">
 
-        <div class="card">
-            <div class="card-header">
-                Total Bill
-            </div>
-            <div class="card-block">
-                <p class="card-text">{{ order.delivery_charges }}</p><br>
-                <p class="card-text">{{ order.extra_charges }}</p><br>
-                <p class="card-text">{{ order.offer_amount }}</p><br>
-                Total Payable : <p class="card-text">{{ order.total_amount }}</p><br>
-            </div>
+        <div class="col-sm-6">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-sm-8 col-xs-9 bhoechie-tab-container">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+                              <div class="list-group">
+                                <a href="#" class="list-group-item active text-center">
+                                  <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Pay Now
+                                </a>
+                                <a href="#" class="list-group-item text-center">
+                                  <h4 class="glyphicon glyphicon-home"></h4><br/>Pay On Delivery
+                                </a>
+                              </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                                <!-- online payment section -->
+                                <div class="bhoechie-tab-content active">
+
+                                        <div class="funkyradio">
+                                            <div class="funkyradio-success">
+                                                <input type="radio" name="paymenttype" id="radio1" value="CREDIT_CARD"/>
+                                                <label for="radio1">Credit Card</label>
+                                            </div>
+                                            <div class="funkyradio-success">
+                                                <input type="radio" name="paymenttype" id="radio2" checked value="DEBIT_CARD"/>
+                                                <label for="radio2">Debit Card</label>
+                                            </div>
+                                            <div class="funkyradio-success">
+                                                <input type="radio" name="paymenttype" id="radio3" value="INTERNET_BANKING"/>
+                                                <label for="radio3">Internet Banking</label>
+                                            </div>
+                                            <div class="funkyradio-success">
+                                                <input type="radio" name="paymenttype" id="radio4" value="PAYTM"/>
+                                                <label for="radio4">Paytm</label>
+                                            </div>
+                                        </div>
+
+                                </div>
+                                <!-- offline payment section -->
+                                <div class="bhoechie-tab-content">
+
+                                        <div class="funkyradio">
+                                            <div class="funkyradio-success">
+                                                <input type="radio" name="paymenttype" id="radio5"  value="COD"/>
+                                                <label for="radio5">Cash Pay</label>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+                </div>
         </div>
 
+        <div class="col-sm-5">
+                <div class="card" style="width:50%;">
+                    <div class="card-header">
+                        <h3>Total Payable : {{ order.total_amount }}</h3>
+                    </div>
+                    <div class="card-block">
+                        <h4 class="card-title">Special title treatment</h4>
 
-                 <div>
+                        <span class="text-left">+ Amount : </span>
+                        <span class="text-right">{{ order.amount }}</span><br>
 
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-              </ul>
+                        <span class="text-left">+ Tax : </span>
+                        <span class="text-right">{{ order.extra_charges }}</span><br>
 
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="home">home</div>
-                <div role="tabpanel" class="tab-pane" id="profile">profile</div>
-              </div>
+                        <span class="text-left">+ Delivery Charge : </span>
+                        <span class="text-right">{{ order.delivery_charges }}</span><br>
 
-            </div>
+                        <span class="text-left">- Discount Amount : </span>
+                        <span class="text-right">{{ order.offer_amount }}</span><br><br>
 
+                        <p class="card-text">By clicking this button, you agree with our <a href="#">terms and conditions</a> </p>
+                        <br><br>
+                        <button class="btn btn-primary" type="submit"> Pay </button>
+                    </div>
+                </div>
+        </div>
+
+    </div>
     </form>
+
+    <div style="display: none;" class="pop-outer">
+        <div class="pop-inner">
+            <button class="close" onclick="closemsg()">
+                <p style="color: #000000">X</p>
+            </button>
+            <h2 style="color: #000000">Message</h2>
+            <p style="color: #000000">Grab some food into your cart before Check-Out!</p>
+            <center>
+            <button class="btn" style="align: center;" onclick="closemsg()"> Let's Get It</button>
+            </center>
+        </div>
+    </div>
+
     <div id="cart"></div>
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/review_payment.js' %}"></script>
 

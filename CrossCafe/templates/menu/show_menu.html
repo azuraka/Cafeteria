@@ -10,6 +10,23 @@
     <title>Cross Cafe</title>
     <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
     <meta name="viewport" content="width=device-width">
+    <style>
+        .pop-outer{
+            background-color: rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .pop-inner{
+            background-color: #ffffff;
+            width: 450px;
+            height: 200px;
+            padding: 25px;
+            margin: 15% auto;
+        }
+    </style>
 </head>
 <body onload="printCart()">
     <div class="row">
@@ -34,7 +51,7 @@
                                             <button type="button" onclick="decrement('{{item.item_id}}')" class="btn">-</button>
                                         </th>
                                         <th class="col-lg-1">
-                                            <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}')" class="btn">Add to Cart !</button>
+                                            <button type="button" onclick="addToCart('{{item.item_id}}', '{{item.name}}', '{{item.price}}')" class="btn">Add to Cart !</button>
                                         </th>
                                 </tr>
                             </tbody>
@@ -49,15 +66,28 @@
                     <h3 class="card-header">Your Order</h3>
                     <div class="card-block">
                         <div id="cart" class='card-block'></div>
-                        <button type="button" onclick="checkout()" class="btn-lg">Checkout !</button><br/>
+                        <button type="button" onclick="clearcart()" class="btn btn-danger">Clear Cart</button>
+                        <button type="button" onclick="checkout()" class="btn btn-success">Checkout</button><br/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div style="display: none;" class="pop-outer">
+        <div class="pop-inner">
+            <button class="close" onclick="closemsg()">
+                <p style="color: #000000">X</p>
+            </button>
+            <h2 style="color: #000000">Message</h2>
+            <p style="color: #000000">Grab some food into your cart before Check-Out!</p>
+            <center>
+            <button class="btn" style="align: center;" onclick="closemsg()"> Let's Get It</button>
+            </center>
+        </div>
+    </div>
 
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/show_menu.js' %}"></script>
 

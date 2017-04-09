@@ -15,7 +15,7 @@ function decrement(item_id){
 
 
 // Add item to cart
-function addToCart(item_id, item_name){
+function addToCart(item_id, item_name, price){
     var num = parseInt($('#' + item_id).text());
     if(localStorage.getItem('cart')==null)
         var temp = [];
@@ -32,7 +32,7 @@ function addToCart(item_id, item_name){
         }
     }
     if(!flag){
-        var item_dict = {'id':item_id, 'item_name':item_name, 'quantity':num};
+        var item_dict = {'id':item_id, 'item_name':item_name, 'quantity':num, 'price':price};
         temp.push(item_dict);
     }
     console.log(temp);
@@ -48,6 +48,8 @@ function printCart() {
         for (var ii = 0; ii < cartData.length; ii++) {
             str += cartData[ii].item_name + ":" + cartData[ii].quantity + "<br>"
         }
+    } else {
+        str += "<span style='background-color: transparent'><img style='opacity: 0.3;' src='https://www.shareicon.net/data/128x128/2016/07/15/796506_delivery_512x512.png'></span><br><span class='no-items-text'>Add Some Food into Your Cart</span>"
     }
     str += "</p></div></div>";
     cartContainer.innerHTML = str;
@@ -60,6 +62,11 @@ function checkout(){
     //    });
     //}
     //else{
+    if(localStorage.getItem('cart')==null || localStorage.getItem('cart')== undefined){
+        //$('#exampleModal3').modal('show');
+        $('.pop-outer').fadeIn('slow');
+        return;
+    }
        window.location.href = '/order/review';
     //}
 }
@@ -79,4 +86,13 @@ function displayCart(){
 
 function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+}
+function clearcart() {
+    if(localStorage.getItem('cart')!=null){
+        localStorage.removeItem('cart');
+    }
+    printCart();
+}
+function closemsg(){
+    $('.pop-outer').fadeOut('slow');
 }

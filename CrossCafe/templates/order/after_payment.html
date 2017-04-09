@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width">
+    <style>
+        .card {
+            margin: 0 auto; /* Added */
+            float: none; /* Added */
+            margin-bottom: 10px; /* Added */
+        }
+    </style>
+</head>
+<body>
+    <form name="pay" method="POST" action="/order/pay" data-toggle="validator" role="form">
+    {% csrf_token %}
+
+    <div class="card card-1 col-md-6 text-md-center text-center">
+        <div class="card-block">
+            {% if order.status == 'AWAITING_ACCEPTANCE'%}
+                <center><img src="../../static/image/success-icon.png" class="img-responsive" width="220" height="180" style="horizontal-align: middle;"></center>
+                <br><h2 class="card-title">Thank You</h2><br>
+            {% else %}
+                <center><img src="../../static/image/failed.png"></center>
+                <br><h2 class="card-title" style="align-items: center">Sorry..!</h2><br><br>
+            {% endif %}
+            <p>Your Order with <b>Order Id : {{ order.order_id }}</b> has been placed successfully and waiting for acceptance by Cafeteria attendant.</p>
+            {% if order.payment_type == 'COD' %}
+                <p>You have opted for Cash on Delivery. Please pay the amount on your door step, when you get your order delivered.</p>
+            {% endif %}
+                <p><a href="#">Click Here</a> to track your order. You can also visit the Order History Section to track the Order</p>
+
+
+        </div>
+    </div>
+    <!--example starts from here-->
+
+    </form>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

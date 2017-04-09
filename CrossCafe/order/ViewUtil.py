@@ -86,22 +86,23 @@ class ViewUtil(object):
 
     @staticmethod
     def get_items_from_payment_page(request, order):
-        if request.POST.get('amount') is None:
-            raise ValueError('amount cannot be null!')
-        if request.POST.get('extra_charges') is None:
-            raise ValueError('extra_charges cannot be null!')
-        payment_type = request.POST.get('payment_type')
+        #if request.POST.get('amount') is None:
+            #raise ValueError('amount cannot be null!')
+        #if request.POST.get('extra_charges') is None:
+            #raise ValueError('extra_charges cannot be null!')
+        payment_type = request.POST.get('paymenttype')
+        print payment_type
         if payment_type is None:
             raise ValueError('payment_type cannot be null!')
 
-        order.amount = request.POST.get('amount')
-        d_charge = request.POST.get('delivery_charges')
-        order.delivery_charges = 0 if Util.Util.is_null(d_charge) else d_charge
-        order.extra_charges = request.POST.get('extra_charges')
+        #order.amount = request.POST.get('amount')
+        #d_charge = request.POST.get('delivery_charges')
+        #order.delivery_charges = 0 if Util.Util.is_null(d_charge) else d_charge
+        #order.extra_charges = request.POST.get('extra_charges')
         order.payment_type = payment_type
         order.status = OrderStatus.OrderStatus.AWAITING_ACCEPTANCE
-        if payment_type.upper() == "ONLINE_PAYMENT":
-            order.bill_date = datetime.now()
+        #if payment_type.upper() == "ONLINE_PAYMENT":
+        order.bill_date = datetime.now()
         return order
 
     @staticmethod

@@ -12,16 +12,16 @@
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    <form name="placeorder" method="POST" action="/order/placeorder">
+    <form name="placeorder" method="POST" action="/order/placeorder" data-toggle="validator" role="form">
     {% csrf_token %}
 
         <div class="row">
             <div class="col-sm-6">
-            {% if cart %}
+            {#{% if cart %}#}
                 <table class="table table-hover">
     	            <thead>
 	    	            <tr>
-		    	            <th>Item Id</th>
+
 			                <th>Item Name</th>
 			                <th>Item Quantity</th>
     		            </tr>
@@ -30,20 +30,46 @@
                     <script>
                         var cartItems = JSON.parse(localStorage.getItem('cart'));
                         for (var i = 0; i<cartItems.length; i++){
-                            document.write("<tr><th scope='row'>"+cartItems[i].item_id+"</th>");
+
                             document.write("<td scope='row'>"+cartItems[i].item_name+"</td>");
                             document.write("<td scope='row'>"+cartItems[i].quantity+"</td></tr>");
+                        }
+                        if(cartItems == null || cartItems == undefined){
+                           document.write("<p class='text-warning'>Your Cart is Empty, Please grab some food to Order!</p>");
                         }
                     </script>
                     </tbody>
                 </table>
-            {% else %}
-                    <p class="text-warning">Your Cart is Empty, Please grab some food to Order!</p>
-            {% endif %}
+            {#{% else %}#}
+                    {#<p class="text-warning">Your Cart is Empty, Please grab some food to Order!</p>#}
+            {#{% endif %}#}
             </div>
         <div class="col-sm-6">
             <div class="card">
-                <p class="text-capitalize">Total Amount : 500</p>
+            <h4 class="card-title">Total</h4>
+                <br>
+                    {% if cart %}
+                        Amount : +{{ cart.amount }}<br>
+                        Tax : +{{ cart.extra_charges }}<br>
+                        Delivery Charge : +{{ cart.delivery_charges }}<br>
+                        Offer Amount : -{{ cart.offer_amount }}<br>
+                        Total Amount : {{ cart.amount}}
+                    {% else %}
+                        <div style="display: none" id="cart" class="cart"></div>
+                        <script>
+                            var cart = JSON.parse(localStorage.getItem('cart'));
+                            var total = 0;
+                            if(cart){
+                                //document.write("<input type='hidden' value='+cart+' id='cart' name='cart'/>");
+                                document.getElementById("cart").innerHTML = localStorage.getItem('cart');
+                                for(var i=0; i<cart.length; i++){
+                                    total += parseFloat(cart[i].quantity) * parseFloat(cart[i].price);
+                                }
+                                document.write("<p data-toggle='tooltip' data-placement='top' title='Extra tax and delivery charges will be shown in next page!'>Amount : "+total+"*</p>");
+                            }
+                        </script><br>
+                    {% endif %}
+                </p>
                 <div class="card-block">
                     <div class="input-group">
                         <input type="text" id="coupon_code" class="form-control" placeholder="Got A Coupon?">
@@ -65,10 +91,10 @@
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">ENTER DELIVERY ADDRESS</h4>
-                        <input type="text" name="address1" placeholder="Flat/House No./Street" class="form-control">
-                        <input type="text" name="address2" placeholder="City/State" class="form-control">
-                        <input type="text" name="landmark" placeholder="Land Mark" class="form-control">
+                        <h4 class="card-title"><label for="address1" class="control-label">DELIVERY ADDRESS</label></h4>
+                        <input type="text" name="address1" placeholder="Flat/House No./Street" class="form-control" required>
+                        <input type="text" name="address2" placeholder="City/State" class="form-control" required>
+                        <input type="text" name="landmark" placeholder="Land Mark" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -76,11 +102,11 @@
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">ENTER CONTACT DETAILS</h4>
-                        <input type="text" name="fname" placeholder="First Name *" class="form-control">
-                        <input type="text" name="lname" placeholder="Last Name *" class="form-control">
-                        <input type="text" name="emailid" placeholder="Email Id *" class="form-control">
-                        <input type="text" name="mnumber" placeholder="Mobile Number" class="form-control">
+                        <h4 class="card-title"><label for="fname" class="control-label">CONTACT DETAILS</label></h4>
+                        <input type="text" name="fname" placeholder="First Name *" class="form-control" required>
+                        <input type="text" name="lname" placeholder="Last Name *" class="form-control" required>
+                        <input type="email" name="emailid" placeholder="Email Id *" class="form-control" required>
+                        <input type="text" name="mnumber" placeholder="Mobile Number" class="form-control" pattern="[0-9]{10}" required>
                     </div>
                 </div>
             </div>
@@ -88,7 +114,7 @@
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">ENTER YOUR ORDER NAME</h4>
+                        <h4 class="card-title"><label class="control-label">ORDER NAME</label></h4>
                         <input type="text" name="order_name" placeholder="Order Name (Optional)" class="form-control">
                     </div>
                 </div>
@@ -103,7 +129,10 @@
         </script>
         <input type="hidden" name="cart" id="cart">
         <input type="hidden" name="restaurant_id" id="restaurant_id" value="0">
-        <input type="submit" name="submit_button" id="submit_button" class="btn pull-right" value="Proceed To Pay">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right">Proceed To Pay</button>
+        </div>
+        <input type="submit" name="submit_button" id="submit_button" class="btn pull-right" value="Proceed To Pay" style="display: none;">
     <script>
         if(localStorage.getItem('cart')==undefined){
             document.getElementById("submit_button").style.visibility="hidden"
