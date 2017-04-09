@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+      {% csrf_token %}
+
+        <div class="row">
+            <div class="col-sm-12">
+            {% if order %}
+                <table class="table table-hover">
+    	            <thead>
+	    	            <tr>
+		    	            <th>Order Id</th>
+			                <th>Order Name</th>
+			                <th>Order Status</th>
+                            <th>Date</th>
+    		            </tr>
+                    </thead>
+                    <tbody>
+                {% for item in order %}
+        <form action="/complaint/add"  method="POST">
+                   
+                   <tr>
+                   <td scope='row'>{{item.order_id}}</td>
+                   <td scope='row'>{{item.order_name}}</td>
+                   <td scope='row'>{{item.status}}</td>
+                   <td scope='row'>{{item.bill_date}}</td>
+                   <td><a class="btn" href="/complaint/add?order={{item.order_id}}"> Add Complaint </td>
+                   
+                   </tr>
+            </div>
+        </form>
+                  {% endfor %}
+                    </script>
+                    </tbody>
+                </table>
+            {% else %}
+                    <p class="text-warning">No Orders To Show</p>
+            {% endif %}
+            <a href="#" class="previous">&laquo; Previous</a>
+            <a href="#" class="next" style="float:right">Next &raquo;</a>
+
+          
+            
+        </div>
+        </div>
+        </div>
+        <script>
+            function next()
+            {
+                //request.session['start']=request.session['start']+10;
+                window.location.reload();
+            }
+            function prev()
+            {
+                session.start=session.getAttribute('start')-10;
+                console.log("hello");
+                // window.location.reload();
+            }
+            function result() {
+                var cartItem = localStorage.getItem("cart");
+                document.write(cartItem);
+                $("#cart").val(cartItem);
+            }
+        </script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <form name="placeorder" method="POST" action="/order/placeorder" data-toggle="validator" role="form">
+    {% csrf_token %}
+
+        <div class="row">
+            <div class="col-sm-9">
+            <div class="container-fluid">
+            
+                <br>
+                    {% if order %}
+                    <table class="table table-hover col-xs-6 col-xs-6" style="cell_padding:20px;">
+                        <tr>
+                            <td>Order Id</td>
+                            <td>{{ order.order_id }} </td>
+                        </tr>
+                        <tr>
+                            <td>Order Name</td>
+                            <td>{{ order.order_name }} </td>
+                        </tr>
+                        <tr>
+                            <td>Customer ID</td>
+                            <td>{{ order.customer_id }} </td>
+                        </tr>
+                        <tr>
+                            <td>Restaurant ID</td>
+                            <td>{{ order.restaurant_id }} </td>
+                        </tr>
+                        <tr>
+                            <td>Order Items</td>
+                            <td>{{ order.order_items }} </td>
+                        </tr>
+                        <tr>
+                            <td>Applied Coupon Code</td>
+                            <td>{{ order.coupon_code }} </td>
+                        </tr>
+                        <tr>
+                            <td>Bill date</td>
+                            <td>{{ order.bill_date }} </td>
+                        </tr>
+                        <tr>
+                            <td>Delivered By</td>
+                            <td>{{ order.delivery_by }} </td>
+                        </tr>
+                        <tr>
+                            <td>Bill</td>
+                            <td>
+                        Amount : +{{ order.amount }}<br>
+                        Tax : +{{ order.extra_charges }}<br>
+                        Delivery Charge : +{{ order.delivery_charges }}<br>
+                        Offer Amount : -{{ order.offer_amount }}
+                            </td>
+                        </tr>
+                        
+
+                    </table>
+                        
+                    {% else %}
+                       <p>No such order found</p>
+                        
+                    {% endif %}
+                </p>
+                
+        </div>
+        </div>
+        </div>
+
+
+
+        </div>
+        
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

@@ -6,29 +6,61 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Cross Cafe Complaint & Feedback</title>
+    <title>Cross Cafe Complaint and Feedback</title>
     <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-{% include 'feedback/complaintMenu.html' %}
-    <h1>Add a Category</h1>
+    <h1>Your Complaint</h1>
+    {% for c in complaints %}
+    <div id="container">
+     <ul id="comments">   
+                {% if c.user_type == "customer" %}
+               
+                <li class="cmmnt">
+                  <div class="avatar"><a href="javascript:void(0);"><img src="/static/image/user.png" width="55" height="55" alt="User"></a></div>
+                   <div class="cmmnt-content">
+                    <header><a href="javascript:void(0);" class="userlink">User</a> - <span class="pubdate">posted {{c.date}} </span></header>
+                    <p>{{c.message}}</p>
+                    </div>
+                    </li>
+         
+                {% else %}
+                <ul class="replies">
+                <li class="cmmnt">
+                  <div class="avatar"><a href="javascript:void(0);"><img src="/static/image/staff.png" width="55" height="55" alt="User"></a></div>
+                   <div class="cmmnt-content">
+                    <header><a href="javascript:void(0);" class="userlink">Company Representative</a> - <span class="pubdate">posted {{c.date}} </span></header>
+                    <p>{{c.message}}</p>
+                    </div>
+                    </li>
+                
+                {% endif %}  
+        </ul>  
+    {% endfor %}
+
+  
+    {% if status == '0' %}
 
         <form id="complaint_form" method="post" action="/complaint/add/">
-
             {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
-
+            <table>
+                <tr>
+                    <td><label for="Order_id"> Order </label></td>
+                    <td><input type="text" name="order" value="{{form.order_id}}" readonly="readonly"></td>
+                </tr>
+                <br/>
+                <tr>
+                    <td><label for="Message"> Message </label></td>
+                    <td><input type="textbox" name="message"></td>
+                </tr>
+            </table>
+            <br/><br/>
             <input type="submit" name="submit" value="Submit Complaint" />
         </form>
+    {% else %}
+        <p class="text-warning">Your Complaint is put in pending status. Wait for reply</p>
+    {% endif %}
 </body>
 </html>
 {% endblock %}

@@ -1,53 +1,72 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from feedback.models import Complaint,ComplaintForm
+from django.http import HttpResponseRedirect
+from django.contrib import admin
+from feedback.models import Complaint
 from django.core import serializers
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from restaurant.views import index
+admin.site.register(Complaint)
 # Create your views here.
-
-def showComplaintStatus(request):
-    order_id = request.GET.get("orderID",0)
-    if order_id :
-        return HttpResponse(str(Complaint.objects.filter(order_id = order_id)[0].status))
-    else :
-        return HttpResponse(str("no Complaints found for the following orderId"))
-    
-
+  
+@csrf_exempt
 def addComplaint(request):
-    context = RequestContext(request)
+    utype = identifyTypeOfUser(request)
+    
     # A HTTP POST?
     if request.method == 'POST':
-        form = ComplaintForm(request.POST)
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            form.save(commit=True)
+        req = request.POST
+        print req
+        if utype == 'staff':  status = '0'
+        else : status = '1'
+        f = Complaint(order_id = int(req['order']), user_type = utype, message = req['message'], status = status)
+        f.save()
+        # Add success alert notification
+        return HttpResponseRedirect('/')
 
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            return index(request)
-        else:
-            # The supplied form contained errors - just print them to the terminal.
-            print form.errors
-    else:
-        # If the request was not a POST, display the form to enter details.
-        form = ComplaintForm()
-    return render_to_response('feedback/complaintForm.html', {'form': form}, context)
+    elif request.method == 'GET':
+        order_id = int(request.GET.get('order'))
+        prev_complaints = Complaint.objects.filter( order_id = order_id )
+        if utype == 'staff':  status = '0'
+        elif prev_complaints:
+            status = prev_complaints.latest('id').status # status of last complaint
+        else :
+            status = '0'
+        print prev_complaints        
+        form = { 'order_id' : order_id }
 
-def change_status_of_complaint(orderID,status):
-    c = Complaint.objects.get(order_id = orderID)
-    c.status = status
-    c.save()
+    return render(request,'feedback/complaintForm.html', {'form': form, 'complaints': prev_complaints, 'status': status})
 
 def showPendingComplaints(request):
-    c = Complaint.objects.filter(status='pending')
-    c = serializers.serialize('json', list(c))
-    return HttpResponse(str(c))
+    orders = Complaint.objects.all().values_list('order_id', flat=True).distinct()
+    complaints = []
+    for entry in orders:
+        entry = Complaint.objects.filter(order_id = entry).latest('id')
+        if entry.status == '1':
+            complaints.append(entry)
+
+    return render(request,'feedback/pendingComplaint.html', {'complaints': complaints})
 
 
-def validRequest(request):
-    pass
 
+def identifyTypeOfUser(request):
+    if request.method == 'GET':
+        order_id = int(request.GET.get('order'))
+    else :
+        order_id = int(request.POST['order'])
+
+    if isManagerForOrder(request.user,order_id):   
+        utype = 'staff'
+    else :
+        utype = 'customer'  
+    return utype
+
+
+def isManagerForOrder(user,order):
+    # if user is manager of the same retaurant as the order
+    # return yes
+    # else no
+    return 0
 
