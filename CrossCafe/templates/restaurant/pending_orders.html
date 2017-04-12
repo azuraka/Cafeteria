@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross Cafe</title>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body >
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="card">
+                <img class="card-img-top img-responsive" src="http://fastdeliveryservice.ca/wp-content/uploads/2014/05/banner_0.jpg">
+                {% if all_waiting_orders %}
+                    <h2>Pending Orders</h2>
+                    <div class="card-block">
+                        {% for order in all_waiting_orders %}
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                            <td scope="row" class="col-lg-8">
+                                            <address>
+                                            Items:    <strong>{{ order.order_items }}</strong><br>
+                                            Total Amount:   {{ order.total_amount  }}<br>
+                                            Date:    {{ order.bill_date }}<br>
+                                            Address:    {{order.delivery_address}} <br>
+                                            </address>
+                                            </td>
+                                            <td class="col-lg-1">
+                                                <button type="button" onclick="approve_order('{{order.order_id}}')" class="btn">Approve Order!</button>
+                                            </td>
+                                            <td class="col-lg-1">
+                                                <button type="button" onclick="decline_order('{{order.order_id}}')" class="btn">Reject Order!</button>
+                                            </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                     <h3>No New Orders</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/attendant.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

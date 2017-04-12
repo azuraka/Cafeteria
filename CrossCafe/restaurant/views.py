@@ -27,4 +27,4 @@ def getAreas(request):
             return HttpResponse('<h1>Restaurant not available in your city</h1>')
     else:
         home_page_url = '/'
-        return HttpResponseRedirect(home_page_url)
+    return HttpResponseRedirect(home_page_url)
