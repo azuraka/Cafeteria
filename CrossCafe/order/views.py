@@ -10,6 +10,7 @@ import json
 from order.models import Order
 from menu.models import FoodItem
 from . import OrderDao, ViewUtil
+from django.utils.html import escape
 
 EXTRA_CHARGES = 30;
 DELIVERY_CHARGES = 20;
@@ -37,17 +38,22 @@ def reviewOrder(request):
     #if request.method == 'GET':
         #raise Http404
     user_id = None
+    print "in reviewOrder"
     if 'user_id' in request.session:
         user_id = request.session['user_id']
     else:
+        print "in revieworder, no login user found"
         return render(request, 'order/review_order.html', {'cart': None})
     if user_id is None:
+        print "user_id is none"
         return render(request, 'order/review_order.html', {'cart': None})
+    #If we get user_id in session then save the Order as Draft and navigate to review_order.html page
 	cart = Order.objects.filter(status='draft').first()
-	if(cart):
-		return render(request, 'order/review_order.html', {'cart': cart})
-	else:
-		return render(request, '/')
+    print cart
+    if(cart):
+        return render(request, 'order/review_order.html', {'cart': cart})
+    else:
+        return render(request, '/')
 
 @csrf_exempt
 def placeorder(request):

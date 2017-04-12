@@ -14,7 +14,7 @@ class ViewUtil(object):
 
     @staticmethod
     def get_items_from_placeorder_page(request, order):
-        item_details = request.POST.get('cart')
+        item_details = request.POST.get('cartdetail')
         order.order_items = item_details
         amount = ViewUtil.calculate_item_amount(item_details)
         order.amount = amount
@@ -59,12 +59,13 @@ class ViewUtil(object):
     def get_item_price(each_item):
         item_id = each_item['id']
         item_quantity = each_item['quantity']
-        if item_id is None or item_quantity is None:
+        item_price = each_item['price']
+        if item_id is None or item_quantity is None or item_price is None:
             raise ValueError('Item Id or Quantity cannot be null')
             item_price = 0
         # MenuModule.get_item_price(item_id)
         else:
-            item_price = 100 * int(item_quantity)
+            item_price = float(item_price) * float(item_quantity)
         return item_price
 
     @staticmethod

@@ -21,7 +21,9 @@
 <body>
     <form name="pay" method="POST" action="/order/pay" data-toggle="validator" role="form">
     {% csrf_token %}
-
+    <script>
+        localStorage.removeItem('cart');
+    </script>
     <div class="card card-1 col-md-6 text-md-center text-center">
         <div class="card-block">
             {% if order.status == 'AWAITING_ACCEPTANCE'%}

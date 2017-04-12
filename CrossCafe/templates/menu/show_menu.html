@@ -39,7 +39,10 @@
                             <tbody>
                                 <tr>
                                         <th scope="row" class="col-lg-8">
-                                            {{ item }}
+                                            {{ item.name }}
+                                        </th>
+                                        <th scope="row" class="col-lg-1">
+                                            &#8377; {{ item.price }}
                                         </th>
                                         <th class="col-lg-1">
                                             <button type="button" onclick="increment('{{item.item_id}}')" class="btn btn-primary btn-sm">+</button>

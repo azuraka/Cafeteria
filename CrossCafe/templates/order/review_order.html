@@ -49,23 +49,25 @@
             <h4 class="card-title">Total</h4>
                 <br>
                     {% if cart %}
-                        Amount : +{{ cart.amount }}<br>
-                        Tax : +{{ cart.extra_charges }}<br>
-                        Delivery Charge : +{{ cart.delivery_charges }}<br>
-                        Offer Amount : -{{ cart.offer_amount }}<br>
-                        Total Amount : {{ cart.amount}}
+                        Amount : +  &#8377;{{ cart.amount }}<br>
+                        Tax : +  &#8377;{{ cart.extra_charges }}<br>
+                        Delivery Charge : +  &#8377; {{ cart.delivery_charges }}<br>
+                        Offer Amount : -  &#8377;{{ cart.offer_amount }}<br>
+                        Total Amount : &#8377; {{ cart.amount}}
                     {% else %}
-                        <div style="display: none" id="cart" class="cart"></div>
+                        {#<div style="display: none" id="cart" class="cart"></div>#}
+                        <input type='hidden' id='cartdetail' name='cartdetail'/>
                         <script>
                             var cart = JSON.parse(localStorage.getItem('cart'));
                             var total = 0;
                             if(cart){
-                                //document.write("<input type='hidden' value='+cart+' id='cart' name='cart'/>");
-                                document.getElementById("cart").innerHTML = localStorage.getItem('cart');
+                                //document.write("<input type='hidden' value="+cart+" id='cart' name='cart'/>");
+                                document.getElementById("cartdetail").value = localStorage.getItem('cart');
+                                //document.getElementById("cart").innerHTML = localStorage.getItem('cart');
                                 for(var i=0; i<cart.length; i++){
                                     total += parseFloat(cart[i].quantity) * parseFloat(cart[i].price);
                                 }
-                                document.write("<p data-toggle='tooltip' data-placement='top' title='Extra tax and delivery charges will be shown in next page!'>Amount : "+total+"*</p>");
+                                document.write("<p data-toggle='tooltip' data-placement='top' title='Extra tax and delivery charges will be shown in next page!'>Amount : &#8377; "+total+"*</p>");
                             }
                         </script><br>
                     {% endif %}
