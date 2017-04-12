@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from restaurant.views import index
+
 admin.site.register(Complaint)
 # Create your views here.
   

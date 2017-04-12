@@ -11,6 +11,7 @@ from django.core import serializers
 #admin.site.register(User)
 # Create your views here.
 
+
 def viewOrderHistory(request):
     start_index = request.session.get('index',0)
     #print UserProfile.objects.get(user=request.user).user_type

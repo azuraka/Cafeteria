@@ -2,12 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from restaurant.models import Restaurant
 from order.models import Order
-
+from user_management.models import UserProfile
+from user_management.user_details import UserDetails
 
 def get_all_waiting_orders(request):
-    print 
+
+    print UserProfile.objects.get(user=request.user).user_type
+ 
     #get userid from request
     #get restaurantid from user table
+    user = UserDetails().getUserType(request)
     restaurant_id=0
     status="AWAITING_ACCEPTANCE"
     all_waiting_orders = get_orders(restaurant_id,status)
@@ -15,18 +19,19 @@ def get_all_waiting_orders(request):
     # -------------get user details (name + phone no) from user table-------------    
     print len(all_waiting_orders)
     print all_waiting_orders
-    return render(request, 'restaurant/pending_orders.html', {'all_waiting_orders': all_waiting_orders})
+    return render(request, 'restaurant/pending_orders.html', {'all_waiting_orders': all_waiting_orders,'user':user})
     
 def get_all_accepted_orders(request):
     #get userid from request
     #get restaurantid from user table
+    user = UserDetails().getUserType(request)
     restaurant_id=0
     status="ACCEPTED"
     all_accepted_orders = get_orders(restaurant_id,status)
     # all_available_delivery_boys
     # user_details =-------------get user details (name + phone no) from user table-------------
     print all_accepted_orders
-    return render(request, 'restaurant/accepted_orders.html', {'all_accepted_orders': all_accepted_orders, 'available_boys' :all_accepted_orders })
+    return render(request, 'restaurant/accepted_orders.html', {'all_accepted_orders': all_accepted_orders, 'available_boys' :all_accepted_orders,'user':user})
     
 def get_orders(restaurant_id,status):
 
