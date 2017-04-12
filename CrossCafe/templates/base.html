@@ -34,9 +34,9 @@
 					
 				  <li><a class="active" href="/"> Home </a></li>
                   <li><a href="#about">About</a></li>
-                {% if user == "customer" %}
+                
 				  <li><a href="/user/orderhistory"> Order History </a></li>
-                {% elif user == "manager" %}
+                {% if user == "manager" %}
 				  <li><a href="/complaint/pending">Pending Complaint</a></li>
                 
                 {% elif user == "attendant" %}
