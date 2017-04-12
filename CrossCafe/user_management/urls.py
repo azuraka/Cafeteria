@@ -4,5 +4,5 @@ from django.conf.urls import url
 from user_management import views as user_view
 
 urlpatterns = [
-    url(r'^$', user_view.index, name='index'),
+    url(r'^orderhistory', user_view.viewOrderHistory, name='orderhistory'),
 ]

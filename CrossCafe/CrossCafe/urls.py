@@ -8,8 +8,6 @@ from django.conf.urls.static import static
 from restaurant import views as restaurant_view
 
 
-
-
 urlpatterns = [
     url(r'^$', restaurant_view.index, name='index'),
     url(r'^restaurant/', include('restaurant.urls')),
@@ -20,6 +18,5 @@ urlpatterns = [
     url(r'^cas/', include('cas_server.urls', namespace="cas_server")),
     
     url(r'^admin/', admin.site.urls),
-    
-    
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
