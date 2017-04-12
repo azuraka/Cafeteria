@@ -1,0 +1,11 @@
+appdirs==1.4.0
+Django==1.10.5
+django-cas-server==0.8.0
+futures==3.0.5
+lxml==3.7.3
+packaging==16.8
+pyparsing==2.1.10
+python-ldap==2.4.32
+requests==2.13.0
+requests-futures==0.9.7
+six==1.10.0

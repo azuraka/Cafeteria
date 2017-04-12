@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^order/', include('order.urls')),
     url(r'^complaint/', include('feedback.urls')),
     url(r'^user/', include('user_management.urls')),
+    url(r'^cas/', include('cas_server.urls', namespace="cas_server")),
     
     url(r'^admin/', admin.site.urls),
     
