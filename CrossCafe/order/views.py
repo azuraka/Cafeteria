@@ -9,7 +9,7 @@ from django.core import serializers
 import json
 from order.models import Order
 from menu.models import FoodItem
-from . import OrderDao, ViewUtil
+from . import OrderDao, ViewUtil,OrderStatus
 from django.utils.html import escape
 
 EXTRA_CHARGES = 30;
@@ -77,6 +77,8 @@ def pay(request):
     order_id = request.session['order_id']#request.POST.get('order_id')
     order_dao = OrderDao.OrderDao.getInstance()
     order = order_dao.find_by_id(order_id)
+    if order is not None and order.status != OrderStatus.OrderStatus.DRAFT:
+        raise Http404('Order has been already placed and cannot be changed! Please contact our help desk')
     order = ViewUtil.ViewUtil.get_items_from_payment_page(request, order)
     order = order_dao.update(order)
     return render(request, 'order/after_payment.html', {'order': order})
