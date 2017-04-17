@@ -8,6 +8,7 @@ from . import Util
 from . import OrderDao
 from order.models import Order
 from django.http import JsonResponse
+from django.http import Http404
 
 
 class ViewUtil(object):
@@ -151,6 +152,8 @@ class ViewUtil(object):
             order_dao.insert(order)
         else:
             order = order_dao.find_by_id(order_id)
+            if order is not None and order.status != OrderStatus.OrderStatus.DRAFT:
+                raise Http404('Cannot place order, This Order is already placed with Id'+str(order.order_id))
             order.customer_id = customer_id
             order = ViewUtil.get_items_from_placeorder_page(request, order)
             order_dao.update(order)
