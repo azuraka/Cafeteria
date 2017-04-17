@@ -18,7 +18,7 @@ def viewOrderHistory(request):
     # username = None
     # if request.user.is_authenticated():
     #     username = request.user.user_id
-    user_id = "rajesh@gmail.com"
+    user_id = "sid@gmail.com"
     try:
         orders = Order.objects.filter(customer_id = user_id)[:7]
     except:

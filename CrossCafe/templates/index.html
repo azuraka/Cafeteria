@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-    <h1>Cross Cafe</h1>
-    <h2>Select Restaurant</h2>
+    <h3 style="position: relative;left: 37%;">Select Restaurant</h3>
 <div class="navbar-form">
-    <form name="restaurant_search" method="POST" action="/restaurant/dropdown_search" class="form-horizontal">
+    <form name="restaurant_search" method="POST" action="/restaurant/dropdown_search" class="form-horizontal" style="position: relative;left: 30%;">
     {% csrf_token %}
         <select name="city" class="form-control">
         {% for city_object in all_cities %}
@@ -14,9 +14,9 @@
         </select>
         <select name="area" class="form-control"></select>
         <input type="submit" name="submit_button" class="btn">
-    </form>
+    </form><br>
+    <img src="{% static '/image/home.jpg' %}" style="position: absolute;left: 10.5%; width: 75%; height: 60%;">
 </div>
-{% load static %}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/index.js' %}"></script>

@@ -7,7 +7,7 @@ from user_management.user_details import UserDetails
 def delivery_boys_order(request):
     # getting user id and restaurant from request
     user = UserDetails().getUserType(request)
-    all_orders = Order.objects.all().filter(restaurant_id=0,delivery_by=1,status="DISPATCHED")
+    all_orders = Order.objects.all().filter(restaurant_id=0,delivery_by=8,status="DISPATCHED")
     print all_orders, len(all_orders)
     return render(request, 'restaurant/orders_to_deliver.html', {'all_orders': all_orders,'user':user})
 

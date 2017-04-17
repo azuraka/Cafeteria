@@ -7,6 +7,12 @@ class UserDetails(object):
         if(request.user.is_authenticated()):
             user = UserProfile.objects.get(user=request.user).user_type
         else:
-            user = ""
-        print user
-        return user
+            user = "attendant"
+        # print user
+        return "manager"
+
+
+    def getDeliveryBoy(self, restaurant_id):
+        DeliveryBoy=UserProfile.objects.filter(user_type="delivery_boy")
+        return DeliveryBoy
+            

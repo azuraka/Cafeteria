@@ -34,7 +34,7 @@
                                             <td scope="row" class="col-lg-8">
                                                 <select name="available_delivery_boys" >
                                                 {% for delivery_boy in available_boys  %}
-                                                    <option value="{{delivery_boy.order_id}}">{{delivery_boy.order_name}}</option>
+                                                    <option value="{{delivery_boy.id}}">{{delivery_boy.user_name}}</option>
                                                 {% endfor %}
                                                 </select>
 

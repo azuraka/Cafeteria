@@ -37,7 +37,10 @@
                 
 				  <li><a href="/user/orderhistory"> Order History </a></li>
                 {% if user == "manager" %}
-				  <li><a href="/complaint/pending">Pending Complaint</a></li>
+
+                <li><a href="/complaint/pending">Add Restaurant</a></li>
+                <li><a href="/complaint/pending">Add Employee</a></li>
+				<li><a href="/complaint/pending">Pending Complaint</a></li>
                 
                 {% elif user == "attendant" %}
 				  <li><a href="/restaurant/get_waiting_orders">Pending Orders</a></li>
@@ -56,7 +59,7 @@
                                         <li><a href="/cas"> Login </a></li>
                                     {% else %}
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#FFFF00;">{{user}}
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu">

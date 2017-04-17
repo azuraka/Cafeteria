@@ -7,7 +7,7 @@ from user_management.user_details import UserDetails
 
 def get_all_waiting_orders(request):
 
-    print UserProfile.objects.get(user=request.user).user_type
+    # print UserProfile.objects.get(user=request.user).user_type
  
     #get userid from request
     #get restaurantid from user table
@@ -28,10 +28,12 @@ def get_all_accepted_orders(request):
     restaurant_id=0
     status="ACCEPTED"
     all_accepted_orders = get_orders(restaurant_id,status)
-    # all_available_delivery_boys
+
+    all_available_delivery_boys=UserDetails().getDeliveryBoy(restaurant_id)
     # user_details =-------------get user details (name + phone no) from user table-------------
     print all_accepted_orders
-    return render(request, 'restaurant/accepted_orders.html', {'all_accepted_orders': all_accepted_orders, 'available_boys' :all_accepted_orders,'user':user})
+    print all_available_delivery_boys
+    return render(request, 'restaurant/accepted_orders.html', {'all_accepted_orders': all_accepted_orders, 'available_boys' :all_available_delivery_boys,'user':user})
     
 def get_orders(restaurant_id,status):
 
@@ -46,10 +48,10 @@ def assign_delivery_boy(request):
     #Send notification to delivery boy
 
     #saving it in DB
-    # entry = Order.objects.get(pk=order_id)
-    # entry.delivery_by=delivery_boy_id
-    # entry.status="DISPATCHED"
-    # entry.save()
+    entry = Order.objects.get(pk=order_id)
+    entry.delivery_by=delivery_boy_id
+    entry.status="DISPATCHED"
+    entry.save()
     return HttpResponse("")
 
 def approve_order(request):
