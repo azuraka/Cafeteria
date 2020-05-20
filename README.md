@@ -49,7 +49,7 @@ Further instructions will be added with time.
 
 * [**Saurabh Jain**](https://azuraka.github.io)
 * **Rajesh Dansena**
-* **Deeksha Singh Thakur**
+* [**Deeksha Singh Thakur**](https://github.com/Deeksha117)
 * **Siddharth Saklecha**
 
 ## License
